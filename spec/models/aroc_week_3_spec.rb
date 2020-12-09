@@ -37,19 +37,19 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     expect(users).to eq(expected_result)
   end
 
-  xit '17. returns the name of items associated with a specific order' do
+  it '17. returns the name of items associated with a specific order' do
     expected_result = ['Abercrombie', 'Giorgio Armani', 'J.crew', 'Fox']
 
     # ----------------------- Using Ruby -------------------------
-    names = Order.last.items.all.map(&:name)
+    # names = Order.last.items.all.map(&:name)
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    names = Order.last.items.order(:name).pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
-    expect(names.sort).to eq(expected_result.sort)
+    expect(names).to eq(expected_result.sort)
   end
 
   xit '18. returns the names of items for a users order' do
