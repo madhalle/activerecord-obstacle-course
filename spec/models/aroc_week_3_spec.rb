@@ -77,13 +77,13 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     expect(items_for_user_3_third_order.sort).to eq(expected_result.sort)
   end
 
-  xit '19. returns the average amount for all orders' do
+  it '19. returns the average amount for all orders' do
     # ---------------------- Using Ruby -------------------------
-    average = (Order.all.map(&:amount).inject(:+)) / (Order.count)
+    # average = (Order.all.map(&:amount).inject(:+)) / (Order.count)
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    average =  Order.all.average(:amount)
     # ------------------------------------------------------------
 
     # Expectation
