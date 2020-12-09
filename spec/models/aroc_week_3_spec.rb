@@ -90,17 +90,18 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     expect(average).to eq(650)
   end
 
-  xit '20. returns the average amount for all orders for one user' do
+  it '20. returns the average amount for all orders for one user' do
     # ---------------------- Using Ruby -------------------------
-    orders = Order.all.map do |order|
-      order if order.user_id == @user_3.id
-    end.select{|i| !i.nil?}
+    # orders = Order.all.map do |order|
+    #   order if order.user_id == @user_3.id
+    # end.select{|i| !i.nil?}
 
-    average = (orders.map(&:amount).inject(:+)) / (orders.count)
+    # average = (orders.map(&:amount).inject(:+)) / (orders.count)
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    user3_id = User.where(name: "Mugatu").pluck(:id)
+    average = Order.where(user_id: user3_id).average(:amount)
     # ------------------------------------------------------------
 
     # Expectation
