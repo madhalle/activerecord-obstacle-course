@@ -15,19 +15,22 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     expected_result = [@user_2.name, @user_3.name, @user_1.name]
 
     # ----------------------- Using Raw SQL-----------------------
-    users = ActiveRecord::Base.connection.execute("
-      select
-        distinct users.name
-      from users
-        join orders on orders.user_id=users.id
-        join order_items ON order_items.order_id=orders.id
-      where order_items.item_id=#{@item_8.id}
-      ORDER BY users.name")
-    users = users.map {|u| u['name']}
+    # users = ActiveRecord::Base.connection.execute("
+    #   select
+    #     distinct users.name
+    #   from users
+    #     join orders on orders.user_id=users.id
+    #     join order_items ON order_items.order_id=orders.id
+    #   where order_items.item_id=#{@item_8.id}
+    #   ORDER BY users.name")
+    # users = users.map {|u| u['name']}
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    item8_id = Item.where(name: "Izod").first.id
+    order_ids= OrderItem.where(item_id: item8_id).pluck(:order_id)
+    user_ids = Order.find(order_ids).pluck(:user_id)
+    users = User.find(user_ids).pluck(:name).sort
     # ------------------------------------------------------------
 
     # Expectation
